@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hifen Studios portfolio — Nhlanhla Sibisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand:    #e8e0d0;
+    --parchment: #f2ece0;
+    --clay:    #c4a882;
+    --burnt:   #8b5e3c;
+    --bark:    #3d2b1f;
+    --ink:     #1a120b;
+    --moss:    #5a6345;
+    --rust:    #b04a2a;
+    --cream:   #faf6ef;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--rust);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--rust);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    opacity: 0.6;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(250,246,239,0.92);
+    border-color: var(--clay);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--rust); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bark);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; left: 0; bottom: -3px;
+    width: 0; height: 1px;
+    background: var(--rust);
+    transition: width 0.25s;
+  }
+  .nav-links a:hover { color: var(--rust); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    padding-top: 9rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem; right: -2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 18vw, 22rem);
+    color: var(--sand);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+  .hero-left { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--moss);
+    border: 1px solid var(--moss);
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-name em {
+    display: block;
+    color: var(--rust);
+    font-style: normal;
+  }
+  .hero-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--clay);
+    letter-spacing: 0.08em;
+    margin-top: 1.2rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-intro {
+    margin-top: 2rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--bark);
+    max-width: 42ch;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-intro strong { color: var(--rust); font-weight: 700; }
+  .hero-ctas {
+    margin-top: 2.5rem;
+    display: flex; gap: 1.2rem; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--ink);
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--rust); border-color: var(--rust); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--clay);
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--rust); color: var(--rust); }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+  .hero-stat-card {
+    border: 1px solid var(--clay);
+    padding: 1.5rem 2rem;
+    background: rgba(232,224,208,0.3);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--bark);
+    line-height: 1.5;
+  }
+  .stat-label strong { display: block; font-size: 1rem; color: var(--ink); }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid var(--clay);
+    border-bottom: 1px solid var(--clay);
+    overflow: hidden;
+    padding: 0.8rem 0;
+    background: var(--sand);
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    color: var(--bark);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .marquee-item::after { content: '✦'; color: var(--rust); font-size: 0.7rem; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 2rem; height: 1px;
+    background: var(--moss);
+    display: inline-block;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .section-title span { color: var(--rust); }
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--bark);
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  /* ABOUT / PHILOSOPHY */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    border-top: 1px solid var(--clay);
+  }
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--clay);
+    border: 1px solid var(--clay);
+    margin-top: 2.5rem;
+  }
+  .pillar {
+    background: var(--cream);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .pillar:hover { background: var(--sand); }
+  .pillar-icon { font-size: 1.5rem; margin-bottom: 0.7rem; }
+  .pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .pillar-text { font-size: 0.82rem; color: var(--bark); line-height: 1.6; }
+  .about-quote {
+    margin-top: 2rem;
+    padding: 1.8rem 2rem;
+    border-left: 3px solid var(--rust);
+    background: var(--sand);
+    font-family: 'DM Mono', monospace;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--bark);
+    line-height: 1.7;
+  }
+  .about-quote cite {
+    display: block;
+    margin-top: 0.8rem;
+    font-style: normal;
+    font-size: 0.72rem;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: flex; flex-wrap: wrap; gap: 0.7rem;
+    margin-top: 2rem;
+  }
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--clay);
+    color: var(--bark);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--rust); color: var(--rust); background: rgba(176,74,42,0.05); }
+
+  /* SERVICES */
+  #services { border-top: 1px solid var(--clay); }
+  .services-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--clay);
+    border: 1px solid var(--clay);
+  }
+  .service-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--rust);
+    transition: width 0.3s;
+  }
+  .service-card:hover { background: var(--sand); }
+  .service-card:hover::before { width: 100%; }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--clay);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .service-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+  }
+  .service-desc { font-size: 0.85rem; color: var(--bark); line-height: 1.7; }
+
+  /* COMPLETED PROJECTS */
+  #completed { border-top: 1px solid var(--clay); }
+  .completed-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--clay);
+    border: 1px solid var(--clay);
+  }
+  .project-card {
+    background: var(--cream);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .project-card:hover { background: var(--sand); }
+  .project-card .tag-row {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    background: var(--sand);
+    color: var(--moss);
+    border: 1px solid var(--moss);
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .project-desc { font-size: 0.85rem; color: var(--bark); line-height: 1.7; margin-bottom: 1.5rem; }
+  .project-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.9rem; }
+  .project-link::after { content: '→'; }
+  .add-project {
+    background: var(--sand);
+    border: 2px dashed var(--clay);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem;
+    color: var(--clay);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .add-project:hover { border-color: var(--rust); color: var(--rust); }
+  .add-project .plus { font-size: 2.5rem; line-height: 1; margin-bottom: 0.5rem; }
+  .add-project p { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* WORK IN PROGRESS PROJECTS */
+  #projects { border-top: 1px solid var(--clay); }
+  .wip-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .wip-card {
+    border: 1px solid var(--clay);
+    padding: 2rem;
+    background: var(--cream);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .wip-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(61,43,31,0.08); }
+  .wip-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    background: var(--rust);
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .wip-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .wip-desc { font-size: 0.82rem; color: var(--bark); line-height: 1.65; }
+  .wip-tech {
+    margin-top: 1.2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--clay);
+    letter-spacing: 0.08em;
+  }
+
+  /* BLOG */
+  #blog { border-top: 1px solid var(--clay); }
+  .blog-header-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .blog-freq {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--moss);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .blog-freq::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--moss);
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1px;
+    background: var(--clay);
+    border: 1px solid var(--clay);
+  }
+  .blog-card {
+    background: var(--cream);
+    padding: 2rem;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .blog-card:hover { background: var(--sand); }
+  .blog-card.featured { padding: 2.5rem; }
+  .blog-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.8rem;
+  }
+  .blog-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.7rem;
+  }
+  .blog-card.featured .blog-title { font-size: 1.5rem; }
+  .blog-excerpt { font-size: 0.82rem; color: var(--bark); line-height: 1.7; margin-bottom: 1rem; }
+  .blog-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--clay);
+    letter-spacing: 0.06em;
+  }
+
+  /* CONTACT */
+  #contact { border-top: 1px solid var(--clay); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+  .contact-left p {
+    font-size: 1rem;
+    color: var(--bark);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .social-links { display: flex; flex-direction: column; gap: 0.8rem; }
+  .social-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none;
+    color: var(--bark);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--clay);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .social-link:hover { border-color: var(--rust); color: var(--rust); background: rgba(176,74,42,0.04); }
+  .social-icon { font-size: 1.1rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input,
+  .contact-form textarea {
+    background: var(--sand);
+    border: 1px solid var(--clay);
+    padding: 1rem 1.2rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: var(--clay); }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--rust); }
+  .contact-form textarea { height: 130px; resize: vertical; }
+  .contact-form button {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+  .contact-form button:hover { background: var(--rust); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--clay);
+    padding: 2.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+  }
+  .footer-logo span { color: var(--rust); }
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--clay);
+    letter-spacing: 0.08em;
+  }
+  .footer-text a { color: var(--clay); text-decoration: none; }
+  .footer-text a:hover { color: var(--rust); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--clay); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--rust); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    section { padding: 4rem 2rem; }
+    #hero { grid-template-columns: 1fr; padding-top: 7rem; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .completed-grid { grid-template-columns: 1fr; }
+    .wip-grid { grid-template-columns: 1fr 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { padding: 2rem; }
+    .hero-bg-text { font-size: 8rem; }
+    .nav-links { gap: 1.4rem; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .wip-grid { grid-template-columns: 1fr; }
+    .about-pillars { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">HIFEN<span>.</span>STUDIOS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#completed">Portfolio</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Available for work ✦ 2025</span>
+    <h1 class="hero-name">
+      Nhlanhla<br>
+      <em>Sibisi</em>
+    </h1>
+    <p class="hero-role">Software Developer & Web Designer — Hifen Studios</p>
+    <p class="hero-intro">
+      I build websites that do more than look good — they <strong>work</strong>.
+      Whether you're a business without a digital home or a person who deserves 
+      to be found online, I'm the person who makes that happen.
+      Still a student. Absolutely serious. Getting better every single day.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Start a Project</a>
+      <a href="#completed" class="btn-ghost">View My Work</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stat-card">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">
+        <strong>Curiosity-driven</strong>
+        Learning a new technology before breakfast is basically the routine.
+      </div>
+    </div>
+    <div class="hero-stat-card">
+      <div class="stat-num">01</div>
+      <div class="stat-label">
+        <strong>Studio, Big Vision</strong>
+        Hifen Studios is the brand I'm building — deliberately, one project at a time.
+      </div>
+    </div>
+    <div class="hero-stat-card">
+      <div class="stat-num">→</div>
+      <div class="stat-label">
+        <strong>Clean. Simple. Effective.</strong>
+        No clutter. No fluff. Just digital solutions that actually work.
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bg-text" aria-hidden="true">HS</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Frontend Development</span>
+    <span class="marquee-item">Portfolio Sites</span>
+    <span class="marquee-item">Business Websites</span>
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Responsive Layouts</span>
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Hifen Studios</span>
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Frontend Development</span>
+    <span class="marquee-item">Portfolio Sites</span>
+    <span class="marquee-item">Business Websites</span>
+    <span class="marquee-item">UI/UX Design</span>
+    <span class="marquee-item">Responsive Layouts</span>
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Hifen Studios</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">Built on<br><span>Craft</span> & Code</h2>
+    <p class="section-subtitle">
+      I'm Nhlanhla — a developer and designer who believes the internet should 
+      be accessible to everyone, from the solo freelancer needing their first site 
+      to the small business that's been putting off "getting online" for three years. 
+      I'm here to solve that.
+    </p>
+    <p class="section-subtitle" style="margin-top:1rem;">
+      I'm currently studying, but I treat every project like it's a real client — 
+      because it is. The learning never stops, and neither does the work.
+    </p>
+    <div class="about-quote">
+      "I'm not building a portfolio just to show what I can do. I'm building Hifen Studios 
+      — a tech brand with a long game. Every line of code is a step toward something bigger."
+      <cite>— Nhlanhla Sibisi</cite>
+    </div>
+  </div>
+
+  <div>
+    <div class="about-pillars reveal">
+      <div class="pillar">
+        <div class="pillar-icon">⚡</div>
+        <div class="pillar-title">Always Learning</div>
+        <div class="pillar-text">New tech, new frameworks, new ideas — consumed daily, applied immediately.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">◻</div>
+        <div class="pillar-title">Minimal by Design</div>
+        <div class="pillar-text">Clean interfaces, clear messaging. Nothing unnecessary survives a review.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">↗</div>
+        <div class="pillar-title">Ambitious</div>
+        <div class="pillar-text">Student now. Founder later. Every project is practice for the bigger picture.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🤝</div>
+        <div class="pillar-title">People-First</div>
+        <div class="pillar-text">Tech is just the tool. Helping real people and businesses thrive — that's the mission.</div>
+      </div>
+    </div>
+
+    <div class="skills-grid reveal" style="margin-top:2rem;">
+      <p class="section-label" style="width:100%;margin-bottom:0.8rem;">Stack & Skills</p>
+      <span class="skill-tag">HTML & CSS</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">React</span>
+      <span class="skill-tag">Responsive Design</span>
+      <span class="skill-tag">UI/UX</span>
+      <span class="skill-tag">Git & GitHub</span>
+      <span class="skill-tag">Figma</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">SEO Basics</span>
+      <span class="skill-tag">Continuously Expanding →</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What I Do</p>
+  <h2 class="section-title">Services &<br><span>Solutions</span></h2>
+  <p class="section-subtitle">Whether you need something simple and clean or something bold and complex — I'll figure it out. Here's where I currently focus my energy.</p>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-title">Portfolio Websites</div>
+      <div class="service-desc">Built for creatives, students, and professionals who need to be seen. Your work deserves a home that does it justice.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-title">Business Websites</div>
+      <div class="service-desc">Helping small businesses establish a credible, functional online presence. Every business deserves to be found — I make that happen.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-title">Landing Pages</div>
+      <div class="service-desc">Fast, focused, effective. A great landing page turns visitors into clients. No fluff — just conversion-focused design.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-title">UI/UX Design</div>
+      <div class="service-desc">Mockups, wireframes, and design systems. I think before I build — so the final product actually makes sense to use.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-title">Redesigns & Fixes</div>
+      <div class="service-desc">Got a site that's broken, outdated, or just ugly? I'll clean it up. Starting from scratch is often easier, but I work with what you have.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-title">Custom Requests</div>
+      <div class="service-desc">Not sure what you need? Reach out anyway. I like problems I haven't solved before. Let's figure it out together.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLETED PROJECTS (Portfolio) -->
+<section id="completed">
+  <p class="section-label">Real Work, Real Results</p>
+  <h2 class="section-title">Completed<br><span>Portfolio</span></h2>
+  <p class="section-subtitle">Projects I've shipped — each one a lesson, each one a step forward. More are coming.</p>
+  <div class="completed-grid reveal">
+
+    <!-- Project 1 placeholder -->
+    <div class="project-card">
+      <div class="tag-row">
+        <span class="project-tag">Web Design</span>
+        <span class="project-tag">HTML/CSS</span>
+      </div>
+      <div class="project-title">Your First Project Title Here</div>
+      <div class="project-desc">Add a short description of this project. What was the problem? What did you build? What does it do for the client or user? Keep it honest and confident.</div>
+      <a href="#" class="project-link">View Project</a>
+    </div>
+
+    <!-- Project 2 placeholder -->
+    <div class="project-card">
+      <div class="tag-row">
+        <span class="project-tag">Portfolio</span>
+        <span class="project-tag">Responsive</span>
+      </div>
+      <div class="project-title">Your Second Project Title Here</div>
+      <div class="project-desc">Describe what this project involved. What tools did you use? What challenge did it solve? Let the work speak, but give it some context.</div>
+      <a href="#" class="project-link">View Project</a>
+    </div>
+
+    <!-- Add more projects slot -->
+    <div class="add-project">
+      <div class="plus">+</div>
+      <p>More projects<br>coming soon</p>
+    </div>
+
+    <!-- Hifen Studios card -->
+    <div class="project-card" style="background:var(--sand);">
+      <div class="tag-row">
+        <span class="project-tag">Brand</span>
+        <span class="project-tag">Ongoing</span>
+      </div>
+      <div class="project-title">Hifen Studios</div>
+      <div class="project-desc">This website. Built from scratch as a living showcase and a brand-in-progress. The first of many things I'm building under the Hifen name. Consider this version 1.0.</div>
+      <a href="#hero" class="project-link">You're already here</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- WORK IN PROGRESS -->
+<section id="projects">
+  <p class="section-label">In the Lab</p>
+  <h2 class="section-title">Current<br><span>Projects</span></h2>
+  <p class="section-subtitle">Things I'm actively building, experimenting with, or figuring out. The messy middle is where the real learning happens.</p>
+  <div class="wip-grid reveal">
+    <div class="wip-card">
+      <span class="wip-badge">In Progress</span>
+      <div class="wip-title">Client Portfolio #1</div>
+      <div class="wip-desc">Building a portfolio site for a creative professional. Focus on clean presentation and strong visual hierarchy. First paid client project.</div>
+      <div class="wip-tech">HTML · CSS · JavaScript</div>
+    </div>
+    <div class="wip-card">
+      <span class="wip-badge">Exploring</span>
+      <div class="wip-title">React Component Library</div>
+      <div class="wip-desc">A personal library of reusable UI components with an earthy, minimal design system. Practice project that will speed up future client work.</div>
+      <div class="wip-tech">React · CSS Modules</div>
+    </div>
+    <div class="wip-card">
+      <span class="wip-badge">Researching</span>
+      <div class="wip-title">Hifen Studios v2</div>
+      <div class="wip-desc">This site is version 1. Version 2 is already being planned — better animations, a CMS-powered blog, and a full case study section.</div>
+      <div class="wip-tech">Next.js · Sanity CMS</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="blog-header-row">
+    <div>
+      <p class="section-label">Thoughts & Insights</p>
+      <h2 class="section-title">The<br><span>Blog</span></h2>
+      <p class="section-subtitle">Tech, growth, business, and the things I'm figuring out as I go. Useful stuff — not filler.</p>
+    </div>
+    <span class="blog-freq">Updated weekly</span>
+  </div>
+
+  <div class="blog-grid reveal">
+    <div class="blog-card featured">
+      <div class="blog-cat">Technology</div>
+      <div class="blog-title">Why Every Small Business Needs a Website (Not Just an Instagram Page)</div>
+      <div class="blog-excerpt">Instagram can vanish overnight. An algorithm can bury you. But your website? That's yours. Here's why owning your online presence isn't optional anymore — it's survival.</div>
+      <div class="blog-meta">Coming Soon · 5 min read</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-cat">Growth</div>
+      <div class="blog-title">Learning to Code While Juggling Life: What Actually Works</div>
+      <div class="blog-excerpt">Not a YouTube tutorial montage. The real rhythm of studying, building, and figuring it out in between everything else.</div>
+      <div class="blog-meta">Coming Soon · 4 min read</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-cat">Business</div>
+      <div class="blog-title">What Makes a Good Website? (Hint: It's Not the Animations)</div>
+      <div class="blog-excerpt">Most flashy websites don't convert. Here's what actually matters when building something people want to use.</div>
+      <div class="blog-meta">Coming Soon · 3 min read</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Let's Work Together</p>
+  <h2 class="section-title">Get in<br><span>Touch</span></h2>
+
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p>
+        If you need a website — for your business, your brand, your portfolio, or 
+        your side project — let's talk. I'm open to new clients, collaborations, 
+        and conversations about building something good.
+      </p>
+      <p>
+        I'm also on Instagram and other platforms. Come say hello, 
+        see what I'm working on, or just send a message if you want your 
+        own piece of the internet.
+      </p>
+      <div class="social-links">
+        <a href="https://instagram.com/" target="_blank" class="social-link" rel="noopener">
+          <span class="social-icon">📷</span>
+          Instagram — @hifenstudios
+        </a>
+        <a href="https://github.com/" target="_blank" class="social-link" rel="noopener">
+          <span class="social-icon">⌨</span>
+          GitHub — View my code
+        </a>
+        <a href="mailto:hello@hifenstudios.com" class="social-link">
+          <span class="social-icon">✉</span>
+          hello@hifenstudios.com
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <input type="text" placeholder="Your name" />
+      <input type="email" placeholder="Your email" />
+      <input type="text" placeholder="What do you need? (e.g. portfolio site, business site)" />
+      <textarea placeholder="Tell me more about your project or idea..."></textarea>
+      <button type="submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">HIFEN<span>.</span>STUDIOS</div>
+  <div class="footer-text">
+    © 2025 Nhlanhla Sibisi · Hifen Studios ·
+    <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="footer-text" style="font-style:italic;">
+    Built with intention. Updated with purpose.
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    ring.style.left   = rx + 'px';
+    ring.style.top    = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .blog-card, .service-card, .project-card, .skill-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      ring.style.width = '52px'; ring.style.height = '52px'; ring.style.opacity = '0.4';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px';
+      ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.6';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.07) + 's';
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  // Form submission
+  document.querySelector('.contact-form button').addEventListener('click', function() {
+    const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+    const filled = Array.from(inputs).every(i => i.value.trim());
+    if (filled) {
+      this.textContent = 'Message Sent ✓';
+      this.style.background = 'var(--moss)';
+      inputs.forEach(i => i.value = '');
+      setTimeout(() => {
+        this.textContent = 'Send Message →';
+        this.style.background = '';
+      }, 3000);
+    } else {
+      this.textContent = 'Fill in all fields first';
+      this.style.background = 'var(--burnt)';
+      setTimeout(() => {
+        this.textContent = 'Send Message →';
+        this.style.background = '';
+      }, 2000);
+    }
+  });
+</script>
+</body>
+</html>
